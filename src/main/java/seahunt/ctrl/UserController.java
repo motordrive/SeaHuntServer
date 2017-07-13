@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import seahunt.entity.User;
 import seahunt.repository.UserRepository;
 
+import java.util.List;
+
 @RestController
 public class UserController {
 
@@ -16,6 +18,11 @@ public class UserController {
     public String hello() {
         System.out.println("You have hit this endpoint!");
         return "Hello Hello!";
+    }
+
+    @RequestMapping(value = "/getAllUsers")
+    public List<User> getAllUsers() {
+        return (List<User>) userRepository.findAll();
     }
 
     @RequestMapping(value = "/users")
