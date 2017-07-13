@@ -12,6 +12,12 @@ public class UserController {
 
     @Autowired private UserRepository userRepository;
 
+    @RequestMapping(value = "/hello")
+    public String hello() {
+        System.out.println("You have hit this endpoint!");
+        return "Hello World!";
+    }
+
     @RequestMapping(value = "/users")
     public User getUser(@RequestParam String name) {
         return userRepository.findByName(name).get(0);
