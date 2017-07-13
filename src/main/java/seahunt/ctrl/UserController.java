@@ -15,7 +15,7 @@ public class UserController {
     @RequestMapping(value = "/hello")
     public String hello() {
         System.out.println("You have hit this endpoint!");
-        return "Hello World!";
+        return "Hello Hello!";
     }
 
     @RequestMapping(value = "/users")
