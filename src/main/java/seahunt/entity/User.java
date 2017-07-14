@@ -12,6 +12,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
     String name;
+    String password;
 
     public Long getId() {
         return id;
@@ -23,6 +24,11 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
     }
 
     @Override

@@ -22,6 +22,8 @@ public class UserController {
 
     @RequestMapping(value = "/getAllUsers")
     public List<User> getAllUsers() {
+
+        System.out.println(userRepository.findAll());
         return (List<User>) userRepository.findAll();
     }
 
@@ -31,11 +33,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/users/create")
-    public Long createUser(@RequestParam String name) {
+    public Long createUser(@RequestParam String name, String password) {
 
         User user = new User();
         user.setName(name);
-
+        user.setPassword(password);
         return userRepository.save(user).getId();
     }
 }
