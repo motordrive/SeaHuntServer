@@ -7,12 +7,18 @@ import org.springframework.web.bind.annotation.RestController;
 import seahunt.entity.User;
 import seahunt.repository.UserRepository;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @RestController
 public class UserController {
 
     @Autowired private UserRepository userRepository;
+
+    @PostConstruct
+    public void setup() {
+        userRepository.deleteAll();
+    }
 
     @RequestMapping(value = "/hello")
     public String hello() {
@@ -33,11 +39,49 @@ public class UserController {
     }
 
     @RequestMapping(value = "/users/create")
-    public Long createUser(@RequestParam String name, String password) {
-
+    public Long createUser(@RequestParam String name, @RequestParam String password) {
+//        for (User user: userRepository.findAll()) {
+//            System.out.println(user.getName());
+//        }
         User user = new User();
         user.setName(name);
         user.setPassword(password);
-        return userRepository.save(user).getId();
+        long thing = userRepository.save(user).getId();
+
+//        for (User user1: userRepository.findAll()) {
+//            System.out.println(user1.getName());
+//        }
+
+        return thing;
+    }
+
+    @RequestMapping(value = "/findUser")
+    public Boolean findUser(@RequestParam String name)
+    {
+        List<User> users = userRepository.findByName(name);
+        return users.size() > 0;
+//
+//        for(int i = 0; i < ((List<User>) userRepository.findByName()).size(); i++)
+//        {
+//            if( (((List<User>) userRepository.findAll()).get(i).getName()).equals(name))
+//            {
+//                return true;
+//            }
+//        }
+//        return false;
+    }
+
+    @RequestMapping(value = "/checkLogin")
+    public Boolean checkLogin (@RequestParam String name, @RequestParam String password)
+    {
+        List<User> users = userRepository.findByName(name);
+        if (users.size() > 0)
+        {
+            if ((users.get(0).getPassword()).equals(password) )
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

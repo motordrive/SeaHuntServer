@@ -30,6 +30,10 @@ public class User {
     {
         this.password = password;
     }
+    public String getPassword()
+    {
+        return password;
+    }
 
     @Override
     public String toString() {
