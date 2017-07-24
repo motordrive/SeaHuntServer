@@ -84,4 +84,29 @@ public class UserController {
         }
         return false;
     }
+
+    @RequestMapping(value = "/getProgress")
+    public String getProgress (@RequestParam String name)
+    {
+        List<User> users = userRepository.findByName(name);
+        if (users.size() > 0)
+        {
+            System.out.print(users.get(0).getProgress());
+            return users.get(0).getProgress();
+
+        }
+        return "false";
+    }
+
+    @RequestMapping(value = "/setProgress")
+    public void setProgress (@RequestParam String name, @RequestParam String value)
+    {
+        List<User> users = userRepository.findByName(name);
+        if (users.size() > 0)
+        {
+            users.get(0).setProgress(value);
+            System.out.print(users.get(0).getProgress());
+
+        }
+    }
 }

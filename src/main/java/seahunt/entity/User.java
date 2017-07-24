@@ -13,6 +13,7 @@ public class User {
     Long id;
     String name;
     String password;
+    String progress;
 
     public Long getId() {
         return id;
@@ -33,6 +34,16 @@ public class User {
     public String getPassword()
     {
         return password;
+    }
+
+    public void setProgress(String progress)
+    {
+        this.progress = progress;
+    }
+
+    public String getProgress()
+    {
+        return progress;
     }
 
     @Override
