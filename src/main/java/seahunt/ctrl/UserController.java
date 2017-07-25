@@ -91,22 +91,22 @@ public class UserController {
         List<User> users = userRepository.findByName(name);
         if (users.size() > 0)
         {
-            System.out.print(users.get(0).getProgress());
+            System.out.println("get progress" + users.get(0).getProgress());
             return users.get(0).getProgress();
 
         }
-        return "false";
+        return "";
     }
 
     @RequestMapping(value = "/setProgress")
-    public void setProgress (@RequestParam String name, @RequestParam String value)
+    public void setProgress (@RequestParam String name, @RequestParam int location, @RequestParam int riddle)
     {
         List<User> users = userRepository.findByName(name);
         if (users.size() > 0)
         {
-            users.get(0).setProgress(value);
-            System.out.print(users.get(0).getProgress());
-
+            users.get(0).setProgress(location, riddle);
+            userRepository.save(users.get(0));
+            System.out.println("set progress" + users.get(0).getProgress());
         }
     }
 }

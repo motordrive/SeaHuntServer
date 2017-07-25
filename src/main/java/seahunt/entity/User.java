@@ -13,7 +13,7 @@ public class User {
     Long id;
     String name;
     String password;
-    String progress;
+    int progress[][] = new int[3][4];
 
     public Long getId() {
         return id;
@@ -36,14 +36,26 @@ public class User {
         return password;
     }
 
-    public void setProgress(String progress)
+    public void setProgress(int location, int riddle)
     {
-        this.progress = progress;
+        progress[location][riddle] = 1;
+        System.out.println("set");
     }
 
     public String getProgress()
     {
-        return progress;
+        String p = "";
+        for(int r = 0; r < 3; r++)
+        {
+            int num = 0;
+            for(int c = 0; c < 4; c++)
+            {
+                num += progress[r][c];
+            }
+            p += num;
+        }
+        System.out.println("user get progress (p):" + p);
+        return p;
     }
 
     @Override
