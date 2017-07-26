@@ -109,4 +109,16 @@ public class UserController {
             System.out.println("set progress" + users.get(0).getProgress());
         }
     }
+
+    @RequestMapping(value = "/updateUser")
+    public void updateUser (@RequestParam String name, @RequestParam String newPassword)
+    {
+        List<User> users = userRepository.findByName(name);
+        if (users.size() > 0)
+        {
+            users.get(0).setPassword(newPassword);
+            userRepository.save(users.get(0));
+            System.out.println(users.get(0).getPassword());
+        }
+    }
 }
