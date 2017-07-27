@@ -60,15 +60,6 @@ public class UserController {
     {
         List<User> users = userRepository.findByName(name);
         return users.size() > 0;
-//
-//        for(int i = 0; i < ((List<User>) userRepository.findByName()).size(); i++)
-//        {
-//            if( (((List<User>) userRepository.findAll()).get(i).getName()).equals(name))
-//            {
-//                return true;
-//            }
-//        }
-//        return false;
     }
 
     @RequestMapping(value = "/checkLogin")
@@ -118,7 +109,7 @@ public class UserController {
         {
             users.get(0).setPassword(newPassword);
             userRepository.save(users.get(0));
-            System.out.println(users.get(0).getPassword());
+            System.out.println("updateUser:" + users.get(0).getPassword());
         }
     }
 }
