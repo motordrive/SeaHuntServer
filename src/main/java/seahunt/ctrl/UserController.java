@@ -15,11 +15,6 @@ public class UserController {
 
     @Autowired private UserRepository userRepository;
 
-    @PostConstruct
-    public void setup() {
-        userRepository.deleteAll();
-    }
-
     @RequestMapping(value = "/hello")
     public String hello() {
         System.out.println("You have hit this endpoint!");
