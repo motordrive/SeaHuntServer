@@ -1,5 +1,6 @@
 package seahunt.ctrl;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -7,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import seahunt.entity.User;
 import seahunt.repository.UserRepository;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 @RestController
@@ -35,19 +35,15 @@ public class UserController {
 
     @RequestMapping(value = "/users/create")
     public Long createUser(@RequestParam String name, @RequestParam String password) {
-//        for (User user: userRepository.findAll()) {
-//            System.out.println(user.getName());
-//        }
+        StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+        String encryptedPassword = passwordEncryptor.encryptPassword(password);
+
         User user = new User();
         user.setName(name);
-        user.setPassword(password);
-        long thing = userRepository.save(user).getId();
+        user.setPassword(encryptedPassword);
+        long userId = userRepository.save(user).getId();
 
-//        for (User user1: userRepository.findAll()) {
-//            System.out.println(user1.getName());
-//        }
-
-        return thing;
+        return userId;
     }
 
     @RequestMapping(value = "/findUser")
@@ -63,7 +59,8 @@ public class UserController {
         List<User> users = userRepository.findByName(name);
         if (users.size() > 0)
         {
-            if ((users.get(0).getPassword()).equals(password) )
+            StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+            if (passwordEncryptor.checkPassword(password, users.get(0).getPassword()))
             {
                 return true;
             }
@@ -102,7 +99,9 @@ public class UserController {
         List<User> users = userRepository.findByName(name);
         if (users.size() > 0)
         {
-            users.get(0).setPassword(newPassword);
+            StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+            String encryptedPassword = passwordEncryptor.encryptPassword(newPassword);
+            users.get(0).setPassword(encryptedPassword);
             userRepository.save(users.get(0));
             System.out.println("updateUser:" + users.get(0).getPassword());
         }
