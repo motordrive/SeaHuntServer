@@ -58,6 +58,17 @@ public class User {
         return p;
     }
 
+    public void resetProgress()
+    {
+        for(int r = 0; r < 3; r++)
+        {
+            for(int c = 0; c < 4; c++)
+            {
+                progress[r][c] = 0;
+            }
+        }
+    }
+
     @Override
     public String toString() {
         return String.format("User[user=%s]", name);

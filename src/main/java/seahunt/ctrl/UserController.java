@@ -107,4 +107,16 @@ public class UserController {
             System.out.println("updateUser:" + users.get(0).getPassword());
         }
     }
+
+    @RequestMapping(value= "/resetProgress")
+    public void restProgress (@RequestParam String name)
+    {
+        List<User> users = userRepository.findByName(name);
+        if (users.size() > 0)
+        {
+            users.get(0).resetProgress();
+            userRepository.save(users.get(0));
+            System.out.println("reset progress:" + users.get(0).getProgress());
+        }
+    }
 }
